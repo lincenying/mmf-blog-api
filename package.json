@@ -8,6 +8,8 @@
     "server": "node server.js"
   },
   "dependencies": {
+    "highlight.js": "^9.6.0",
+    "marked": "^0.3.6",
     "md5": "^2.1.0",
     "moment": "^2.14.1"
   },
