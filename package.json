@@ -2,8 +2,8 @@
   "name": "mmf-blog-api",
   "version": "2.0.0",
   "description": "mmf blog api server",
-  "author": "景天 &lt;jingtian@naitang.com&gt;",
-  "private": true,
+  "author": "lincenying &lt;lincenying@qq.com&gt;",
+  "license": "MIT",
   "scripts": {
     "server": "node server.js"
   },
