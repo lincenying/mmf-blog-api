@@ -10,11 +10,11 @@
   "dependencies": {
     "highlight.js": "^9.6.0",
     "marked": "^0.3.6",
-    "md5": "^2.1.0",
+    "md5": "^2.2.1",
     "moment": "^2.14.1"
   },
   "devDependencies": {
-    "bluebird": "^3.4.3",
+    "bluebird": "^3.4.6",
     "body-parser": "^1.10.2",
     "compression": "^1.6.2",
     "connect-multiparty": "^2.0.0",
@@ -23,7 +23,7 @@
     "ejs": "^2.5.1",
     "express": "^4.14.0",
     "function-bind": "^1.1.0",
-    "mongoose": "^4.5.10",
+    "mongoose": "^4.6.0",
     "morgan": "^1.5.3",
     "ora": "^0.3.0",
     "serve-favicon": "^2.2.1"
