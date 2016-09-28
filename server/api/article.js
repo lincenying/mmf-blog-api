@@ -58,14 +58,15 @@ exports.getAdminArticle = (req, res) => {
  * @return {[type]}     [description]
  */
 exports.getArticle = (req, res) => {
-    if (!req.query.id) {
+    var id = req.query.id || req.body.id
+    if (!id) {
         res.json({
             code: -200,
             message: '参数错误'
         })
     }
     Article.findOneAsync({
-        _id: req.query.id
+        _id: id
     })
     .then(result => {
         res.json({
