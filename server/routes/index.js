@@ -7,16 +7,16 @@ var article = require('../api/article'),
     comment = require('../api/comment'),
     user = require('../api/user')
 
-router.all('*',function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'http://vue2.mmxiaowu.com')
-    res.header("Access-Control-Allow-Headers", "X-Requested-With, Authorization")
-    res.header("Access-Control-Allow-Credentials", true)
-    if (req.method === 'OPTIONS') {
-        res.send(200)
-    } else {
-        next()
-    }
-})
+// router.all('*',function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', 'http://vue2.mmxiaowu.com')
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With, Authorization")
+//     res.header("Access-Control-Allow-Credentials", true)
+//     if (req.method === 'OPTIONS') {
+//         res.send(200)
+//     } else {
+//         next()
+//     }
+// })
 
 // 首页
 router.get('/', (req, res) => {

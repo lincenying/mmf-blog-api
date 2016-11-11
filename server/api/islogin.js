@@ -10,7 +10,7 @@ module.exports = (req, res) => {
         res.clearCookie(username)
         res.json({
             code: -500,
-            message: '清先登录'
+            message: '请先登录'
         })
     }
 }
