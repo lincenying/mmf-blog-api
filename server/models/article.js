@@ -5,6 +5,7 @@ var Promise = require('bluebird')
 var ArticleSchema = new Schema({
     title: String,
     content: String,
+    html: String,
     category: Number,
     visit: Number,
     comment_count: Number,

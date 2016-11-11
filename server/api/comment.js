@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 var Comment = mongoose.model('Comment')
+var Article = mongoose.model('Article')
 var moment = require('moment')
 /**
  * 发布评论
@@ -33,17 +34,25 @@ exports.postComment = (req, res) => {
     }
     Comment.createAsync(data)
     .then(result => {
-        return res.json({
-            code: 200,
-            data: {
-                _id: result._id,
-                article_id: id,
-                username,
-                content,
-                creat_date,
-                is_delete: 0
-            },
-            message: '发布成功'
+        return Article.updateAsync({
+            _id: id
+        }, {
+            '$inc':{
+                'comment_count': 1
+            }
+        }).then(() => {
+            res.json({
+                code: 200,
+                data: {
+                    _id: result._id,
+                    article_id: id,
+                    username,
+                    content,
+                    creat_date,
+                    is_delete: 0
+                },
+                message: '发布成功'
+            })
         })
     }).catch(err => {
         res.json({

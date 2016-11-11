@@ -2,14 +2,14 @@ var mongoose = require('mongoose')
 var Article = mongoose.model('Article')
 const isLogin = require('./islogin')
 var moment = require('moment')
-var marked = require('marked')
-var hljs = require('highlight.js')
-marked.setOptions({
-    highlight(code) {
-        return hljs.highlightAuto(code).value
-    },
-    breaks: true
-})
+// var marked = require('marked')
+// var hljs = require('highlight.js')
+// marked.setOptions({
+//     highlight(code) {
+//         return hljs.highlightAuto(code).value
+//     },
+//     breaks: true
+// })
 
 /**
  * 管理时, 获取文章列表
@@ -91,7 +91,7 @@ exports.getArticle = (req, res) => {
 exports.getArticleList = (req, res) => {
     var id = req.body.id,
         limit = req.body.limit,
-        markdown = req.body.markdown,
+        //markdown = req.body.markdown,
         page = req.body.page,
         qs = req.body.qs
     page = parseInt(page, 10)
@@ -116,12 +116,12 @@ exports.getArticleList = (req, res) => {
     ]).then(result => {
         var total = result[1]
         var totalPage = Math.ceil(total / limit)
-        if (markdown) {
-            result[0].map(data => {
-                data.content = marked(data.content)
-                return data
-            })
-        }
+        // if (markdown) {
+        //     result[0].map(data => {
+        //         data.content = marked(data.content)
+        //         return data
+        //     })
+        // }
         var json = {
             code: 200,
             data: {
@@ -149,7 +149,7 @@ exports.getArticleList = (req, res) => {
 
 exports.article = (req, res) => {
     var _id = req.query.id || req.body.id
-    var markdown = req.query.markdown || req.body.markdown
+//    var markdown = req.query.markdown || req.body.markdown
     if (!_id) {
         res.json({
             code: -200,
@@ -177,9 +177,9 @@ exports.article = (req, res) => {
             prev_id: value[2] ? value[2]._id : '',
             prev_title: value[2] ? value[2].title : ''
         }
-        if (markdown) {
-            value[0].content = marked(value[0].content)
-        }
+        // if (markdown) {
+        //     value[0].content = marked(value[0].content)
+        // }
         var json = {
             code: 200,
             data: value[0],
@@ -206,11 +206,13 @@ exports.post = (req, res) => {
     isLogin(req, res)
     var category = req.body.category,
         content = req.body.content,
+        html = req.body['post-content-html-code'],
         title = req.body.title
     var data = {
         title,
         category,
         content,
+        html,
         visit: 0,
         comment_count: 0,
         creat_date: moment().format('YYYY-MM-DD HH:MM:SS'),
