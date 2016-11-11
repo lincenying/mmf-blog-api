@@ -299,6 +299,7 @@ exports.modify = (req, res) => {
     isLogin(req, res)
     var category = req.body.category,
         content = req.body.content,
+        html = req.body['post-content-html-code'],
         id = req.body.id,
         title = req.body.title
     Article.updateAsync({
@@ -306,6 +307,7 @@ exports.modify = (req, res) => {
     }, {
         title,
         content,
+        html,
         category
     }).then(() => {
         res.json({
