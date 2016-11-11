@@ -7,6 +7,16 @@ var article = require('../api/article'),
     comment = require('../api/comment'),
     user = require('../api/user')
 
+router.all('*',function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*.mmxiaowu.com')
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Authorization")
+    if (req.method === 'OPTIONS') {
+        res.send(200)
+    } else {
+        next()
+    }
+})
+
 // 首页
 router.get('/', (req, res) => {
     res.render('index.html', { title: '首页' })
@@ -14,6 +24,9 @@ router.get('/', (req, res) => {
 
 // 添加管理员
 router.get('/admin', (req, res) => {
+    res.render('admin.html', { title: '添加管理员', message: '' })
+})
+router.post('/admin', (req, res) => {
     user.insertUser(req, res)
 })
 

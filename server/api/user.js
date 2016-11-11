@@ -3,14 +3,29 @@ var User = mongoose.model('User')
 var md5 = require('md5')
 
 exports.insertUser = (req, res, next) => {
-    User.createAsync({
-        username: 'admin',
-        password: md5('123456'),
-        leval: 9
-    })
-    .then(() => {
-        res.send('添加用户成功: admin, 密码: 123456')
-    }).catch(err => next(err))
+    var password = req.body.password,
+        username = req.body.username
+    if (!username || !password) {
+        res.render('admin.html', { message: '请输入用户密码' })
+    } else {
+        User.findOneAsync({
+            username
+        })
+        .then(result => {
+            if (result) {
+                return '该用户已经存在'
+            }
+            return User.createAsync({
+                username,
+                password: md5(password),
+                leval: 9
+            }).then(() => {
+                return '添加用户成功: '+username+', 密码: '+password
+            })
+        }).then(message => {
+            res.render('admin.html', { message })
+        }).catch(err => next(err))
+    }
 }
 
 exports.login = (req, res) => {
