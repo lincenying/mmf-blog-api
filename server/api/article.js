@@ -307,8 +307,10 @@ exports.modify = (req, res) => {
     }, {
         title,
         content,
-        html,
-        category
+        category,
+        '$set':{
+            html
+        }
     }).then(() => {
         res.json({
             code: 200,
