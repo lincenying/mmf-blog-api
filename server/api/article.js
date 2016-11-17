@@ -161,6 +161,13 @@ exports.article = (req, res) => {
             _id,
             is_delete: 0
         }),
+        Article.updateAsync({
+            _id
+        }, {
+            '$inc':{
+                'visit': 1
+            }
+        }),
         Article.findOne({
             is_delete: 0
         }).where('_id').gt(_id).sort('_id').exec(),
