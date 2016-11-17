@@ -12,5 +12,7 @@ module.exports = (req, res) => {
             code: -500,
             message: '请先登录'
         })
+        return false
     }
+    return true
 }

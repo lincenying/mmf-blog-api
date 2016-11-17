@@ -203,7 +203,7 @@ exports.article = (req, res) => {
  * @return {[type]}     [description]
  */
 exports.post = (req, res) => {
-    isLogin(req, res)
+    if (!isLogin(req, res)) return
     var category = req.body.category,
         content = req.body.content,
         html = req.body['post-content-html-code'],
@@ -242,7 +242,7 @@ exports.post = (req, res) => {
  * @return {[type]}     [description]
  */
 exports.delete = (req, res) => {
-    isLogin(req, res)
+    if (!isLogin(req, res)) return
     var id = req.body.id
     Article.updateAsync({
         _id: id
@@ -269,7 +269,7 @@ exports.delete = (req, res) => {
  * @return {[type]}     [description]
  */
 exports.recover = (req, res) => {
-    isLogin(req, res)
+    if (!isLogin(req, res)) return
     var id = req.body.id
     Article.updateAsync({
         _id: id
@@ -296,7 +296,7 @@ exports.recover = (req, res) => {
  * @return {[type]}     [description]
  */
 exports.modify = (req, res) => {
-    isLogin(req, res)
+    if (!isLogin(req, res)) return
     var category = req.body.category,
         content = req.body.content,
         html = req.body['post-content-html-code'],
