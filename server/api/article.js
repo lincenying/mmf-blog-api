@@ -161,19 +161,19 @@ exports.article = (req, res) => {
             _id,
             is_delete: 0
         }),
+        Article.findOne({
+            is_delete: 0
+        }).where('_id').gt(_id).sort('_id').exec(),
+        Article.findOne({
+            is_delete: 0
+        }).where('_id').lt(_id).sort('-_id').exec(),
         Article.updateAsync({
             _id
         }, {
             '$inc':{
                 'visit': 1
             }
-        }),
-        Article.findOne({
-            is_delete: 0
-        }).where('_id').gt(_id).sort('_id').exec(),
-        Article.findOne({
-            is_delete: 0
-        }).where('_id').lt(_id).sort('-_id').exec()
+        })
     ]).then(value => {
         var next = {
             next_id: value[1] ? value[1]._id : '',
