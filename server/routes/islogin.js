@@ -1,6 +1,6 @@
 var md5 = require('md5')
 
-module.exports = (req, res) => {
+module.exports = (req, res, next) => {
     var user = req.cookies.user,
         userid = req.cookies.userid,
         username = req.cookies.username
@@ -12,7 +12,7 @@ module.exports = (req, res) => {
             code: -500,
             message: '请先登录'
         })
-        return false
+    } else {
+        next()
     }
-    return true
 }

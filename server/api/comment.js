@@ -69,10 +69,10 @@ exports.postComment = (req, res) => {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.comment = (req, res) => {
-    var id = req.query.id || req.body.id,
-        limit = req.body.limit,
-        page = req.body.page
+exports.getComment = (req, res) => {
+    var id = req.query.id,
+        limit = req.query.limit,
+        page = req.query.page
     page = parseInt(page, 10)
     limit = parseInt(limit, 10)
     if (!page) page = 1

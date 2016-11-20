@@ -5,18 +5,8 @@ var multipartMiddleware = multipart()
 
 var article = require('../api/article'),
     comment = require('../api/comment'),
+    isLogin = require('./islogin'),
     user = require('../api/user')
-
-// router.all('*',function (req, res, next) {
-//     res.header('Access-Control-Allow-Origin', 'http://vue2.mmxiaowu.com')
-//     res.header("Access-Control-Allow-Headers", "X-Requested-With, Authorization")
-//     res.header("Access-Control-Allow-Credentials", true)
-//     if (req.method === 'OPTIONS') {
-//         res.send(200)
-//     } else {
-//         next()
-//     }
-// })
 
 // 首页
 router.get('/', (req, res) => {
@@ -30,29 +20,57 @@ router.get('/admin', (req, res) => {
 router.post('/admin', (req, res) => {
     user.insertUser(req, res)
 })
-
-router.get('*', (req, res) => {
-    res.render('index.html', { title: '首页' })
+// API
+// 管理时, 获取文章列表
+router.get('/api/admin/topics', multipartMiddleware, isLogin, (req, res) => {
+    article.getAdminTopics(req, res)
+})
+// 管理时, 获取单篇文章
+router.get('/api/admin/article', multipartMiddleware, isLogin, (req, res) => {
+    article.getAdminArticle(req, res)
+})
+// 管理时, 发布文章
+router.post('/api/admin/article/post', multipartMiddleware, isLogin, (req, res) => {
+    article.postArticle(req, res)
+})
+// 管理时, 删除文章
+router.get('/api/admin/article/delete', multipartMiddleware, isLogin, (req, res) => {
+    article.deleteArticle(req, res)
+})
+// 管理时, 恢复文章
+router.get('/api/admin/article/recover', multipartMiddleware, isLogin, (req, res) => {
+    article.recoverArticle(req, res)
+})
+// 管理时, 编辑文章
+router.post('/api/admin/article/modify', multipartMiddleware, isLogin, (req, res) => {
+    article.modifyArticle(req, res)
+})
+// 前台浏览时, 获取文章列表
+router.get('/api/frontend/topics', multipartMiddleware, (req, res) => {
+    article.getTopics(req, res)
+})
+// 前台浏览时, 获取单篇文章
+router.get('/api/frontend/article', multipartMiddleware, (req, res) => {
+    article.geArticle(req, res)
+})
+// 发布评论
+router.post('/api/frontend/comment/post', multipartMiddleware, (req, res) => {
+    comment.postComment(req, res)
+})
+// 读取评论列表
+router.get('/api/frontend/comment/list', multipartMiddleware, (req, res) => {
+    comment.getComment(req, res)
+})
+// 登录
+router.post('/api/frontend/login', multipartMiddleware, (req, res) => {
+    user.login(req, res)
 })
 
-// API
-router.post('/api', multipartMiddleware, (req, res, next) => {
-    var action = req.query.action || req.body.action
-    var articleArray = ['getAdminArticle', 'getArticle', 'getArticleList', 'article', 'post', 'delete', 'recover', 'modify', ],
-        commentArrat = ['postComment', 'comment'],
-        userArray = ['login']
-    if (userArray.indexOf(action) > -1) {
-        user[action](req, res, next)
-    } else if (articleArray.indexOf(action) > -1) {
-        article[action](req, res, next)
-    } else if (commentArrat.indexOf(action) > -1) {
-        comment[action](req, res, next)
-    } else {
-        res.json({
-            code: -200,
-            message: '参数错误'
-        })
-    }
+router.get('*', (req, res) => {
+    res.json({
+        code: -200,
+        message: '没有找到该页面'
+    })
 })
 
 module.exports = router

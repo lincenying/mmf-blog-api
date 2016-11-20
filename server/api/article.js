@@ -1,6 +1,5 @@
 var mongoose = require('mongoose')
 var Article = mongoose.model('Article')
-const isLogin = require('./islogin')
 var moment = require('moment')
 // var marked = require('marked')
 // var hljs = require('highlight.js')
@@ -18,9 +17,9 @@ var moment = require('moment')
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.getAdminArticle = (req, res) => {
-    var limit = req.body.limit,
-        page = req.body.page
+exports.getAdminTopics = (req, res) => {
+    var limit = req.query.limit,
+        page = req.query.page
     page = parseInt(page, 10)
     limit = parseInt(limit, 10)
     if (!page) page = 1
@@ -57,8 +56,8 @@ exports.getAdminArticle = (req, res) => {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.getArticle = (req, res) => {
-    var id = req.query.id || req.body.id
+exports.getAdminArticle = (req, res) => {
+    var id = req.query.id
     if (!id) {
         res.json({
             code: -200,
@@ -88,12 +87,12 @@ exports.getArticle = (req, res) => {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.getArticleList = (req, res) => {
-    var id = req.body.id,
-        limit = req.body.limit,
-        //markdown = req.body.markdown,
-        page = req.body.page,
-        qs = req.body.qs
+exports.getTopics = (req, res) => {
+    var id = req.query.id,
+        limit = req.query.limit,
+        //markdown = req.query.markdown,
+        page = req.query.page,
+        qs = req.query.qs
     page = parseInt(page, 10)
     limit = parseInt(limit, 10)
     if (!page) page = 1
@@ -147,9 +146,9 @@ exports.getArticleList = (req, res) => {
  * @return {[type]}     [description]
  */
 
-exports.article = (req, res) => {
-    var _id = req.query.id || req.body.id
-//    var markdown = req.query.markdown || req.body.markdown
+exports.geArticle = (req, res) => {
+    var _id = req.query.id
+//    var markdown = req.query.markdown
     if (!_id) {
         res.json({
             code: -200,
@@ -209,8 +208,7 @@ exports.article = (req, res) => {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.post = (req, res) => {
-    if (!isLogin(req, res)) return
+exports.postArticle = (req, res) => {
     var category = req.body.category,
         content = req.body.content,
         html = req.body['post-content-html-code'],
@@ -248,9 +246,8 @@ exports.post = (req, res) => {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.delete = (req, res) => {
-    if (!isLogin(req, res)) return
-    var id = req.body.id
+exports.deleteArticle = (req, res) => {
+    var id = req.query.id
     Article.updateAsync({
         _id: id
     }, {
@@ -275,9 +272,8 @@ exports.delete = (req, res) => {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.recover = (req, res) => {
-    if (!isLogin(req, res)) return
-    var id = req.body.id
+exports.recoverArticle = (req, res) => {
+    var id = req.query.id
     Article.updateAsync({
         _id: id
     }, {
@@ -302,8 +298,7 @@ exports.recover = (req, res) => {
  * @param  {[type]} res [description]
  * @return {[type]}     [description]
  */
-exports.modify = (req, res) => {
-    if (!isLogin(req, res)) return
+exports.modifyArticle = (req, res) => {
     var category = req.body.category,
         content = req.body.content,
         html = req.body['post-content-html-code'],
