@@ -1,17 +1,14 @@
 var express = require('express')
 var compression = require('compression')
-var mongoose = require('mongoose')
 var path = require('path')
 var favicon = require('serve-favicon')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 
-mongoose.connect('mongodb://localhost:27017/mmfblog')
 require('./server/models/user')
 require('./server/models/article')
 require('./server/models/comment')
-mongoose.Promise = global.Promise
 
 var routes = require('./server/routes/index')
 

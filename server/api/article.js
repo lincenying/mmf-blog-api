@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+var mongoose = require('../mongoose')
 var Article = mongoose.model('Article')
 var moment = require('moment')
 // var marked = require('marked')
